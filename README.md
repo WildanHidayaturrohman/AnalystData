@@ -1,5 +1,6 @@
 # AnalystData
-masuk ke file nyoba.py
+buat folder dengan nama misal "proyek dashboard"
+buat file nyoba.py dan salin kode dari nyoba.py
 pastikan terminal berada di tempat yang tepat, seperti cd "C:\latihan\.vscode\proyek dashboard"
 jalankan pip install pandas numpy matplotlib seaborn streamlit babel gdown di terminal tersebut lalu enter
 jalankan pip show streamlit lalu enter
