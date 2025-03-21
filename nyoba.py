@@ -20,15 +20,3 @@ for idx, file in enumerate(file_id, start=1):
     output = f"output{idx}.csv"
     print(f"Mengunduh {output} dari {url}...")
     gdown.download(url, output, quiet=False)
-
-# Membaca file CSV ke dalam dataframe
-seller_df = pd.read_csv("output1.csv")
-product_df = pd.read_csv("output2.csv")
-translate_df = pd.read_csv("output3.csv")
-orders_df = pd.read_csv("output4.csv")
-review_df = pd.read_csv("output5.csv")
-payment_df = pd.read_csv("output6.csv")
-item_df = pd.read_csv("output7.csv")
-geolocation_df = pd.read_csv("output8.csv")
-customers_df = pd.read_csv("output9.csv")
-customers_df.head()
