@@ -1,10 +1,10 @@
 # Membaca file CSV ke dalam dataframe
-rfm_df = pd.read_csv("output1.csv")
-merged_4_df = pd.read_csv("output2.csv")
-kategori_produk_terurut_english = pd.read_csv("output3.csv")
-jumlah_pesanan_terlambat_per_state = pd.read_csv("output4.csv")
-customer_kategori_sorted = pd.read_csv("output5.csv")
-rata_rata_waktu_pengiriman_per_state = pd.read_csv("output6.csv")
+rfm_df = pd.read_csv("rfm_df.csv")
+merged_4_df = pd.read_csv("merged_4_df.csv")
+kategori_produk_terurut_english = pd.read_csv("kategori_produk_terurut_english.csv")
+jumlah_pesanan_terlambat_per_state = pd.read_csv("jumlah_pesanan_terlambat_per_state.csv")
+customer_kategori_sorted = pd.read_csv("customer_kategori_sorted.csv")
+rata_rata_waktu_pengiriman_per_state = pd.read_csv("rata_rata_waktu_pengiriman_per_state.csv")
 
 import pandas as pd
 import numpy as np
@@ -23,12 +23,12 @@ st.sidebar.header("Filters")
 
 # Filter untuk pertanyaan 1 dan 2
 date_range = st.sidebar.date_input(
-    "Select Date Range (Last Year Before 2018-10-17 17:30:18):",
+    "Select Date Range (Sebelum 2018-10-17 17:30:18):",
     [pd.to_datetime("2017-10-17"), pd.to_datetime("2018-10-17")]
 )
 
 # Filter untuk pertanyaan 3
-top_bottom_filter = st.sidebar.radio("Question 3 Filter:", ["Top 10", "Bottom 10"])
+top_bottom_filter = st.sidebar.radio("Pertanyaan 3 Filter:", ["Top 10", "Bottom 10"])
 
 
 # pertanyaan 1
