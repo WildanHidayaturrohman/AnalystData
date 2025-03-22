@@ -1,22 +1,21 @@
-import gdown
 import pandas as pd
+import gdown
 
-# Daftar ID file dari Google Drive
-file_id = [
-    "19t0PyBIgMO7ZxzQlcLRr0pMQk5B5G1VC",
-    "1oYy-uUOfAWThLnYP8x0FjLj8Nbpndq3Y",
-    "11QB0O9-R7NJi4fVU8yELCqbQ7SWX-7K-",
-    "1iarrW5V2FKfUDF2hZrBGam1FXs30Eg3Y",
-    "1z-cZD2r6UdfKsac-YrODNzYzFo-swcrC",
-    "1oxmU3TVyTsL967nlR5aQQKymfmOldxlS",
-    "12Qum7pbdtma1KW0RNlup726DUkSfjhPl",
-    "15hZUOK0fu1-XqdZ8uZ8OGSp_GLhIFTbB",
-    "1QjhNVSRIDhbwEB9N89ob093gSRmzrlvV"
-]
+# Daftar file_id dan nama file output yang sesuai
+file_info = {
+    "189NMMz4eEcmX_e9h9SQ5Xip_PprYTX-S": "rfm_df.csv",
+    "16Y2nmqQTDWBNTt0Bz2v1f9cwBJqqvpNb": "merged_4_df.csv",
+    "1oImyQqC7mdkhHk7tvkcR7rsSIUchAZBN": "kategori_produk_terurut_english.csv",
+    "1MbWlpyS1F0LNjbt0Ow051jipA6z5ckkK": "jumlah_pesanan_terlambat_per_state.csv",
+    "144uxyKd_TkjVSIwi2PccAsOvMY0qR0UA": "customer_kategori_sorted.csv",
+    "1JfFEIflZuLk8YpVYtSZWIQSiaqTfJvtO": "rata_rata_waktu_pengiriman_per_state.csv"
+}
 
-# Mengunduh file dengan nama output1.csv, output2.csv, ...
-for idx, file in enumerate(file_id, start=1):
-    url = f"https://drive.google.com/uc?id={file}"
-    output = f"output{idx}.csv"
-    print(f"Mengunduh {output} dari {url}...")
-    gdown.download(url, output, quiet=False)
+# Mengunduh file dengan nama yang sesuai
+def download_files(file_info):
+    for file_id, output_name in file_info.items():
+        url = f"https://drive.google.com/uc?id={file_id}"
+        print(f"Mengunduh {output_name} dari {url}...")
+        gdown.download(url, output_name, quiet=False)
+
+download_files(file_info)
