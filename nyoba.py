@@ -5,10 +5,10 @@ import gdown
 file_info = {
     "189NMMz4eEcmX_e9h9SQ5Xip_PprYTX-S": "rfm_df.csv",
     "16Y2nmqQTDWBNTt0Bz2v1f9cwBJqqvpNb": "merged_4_df.csv",
-    "1oImyQqC7mdkhHk7tvkcR7rsSIUchAZBN": "kategori_produk_terurut_english.csv",
-    "1MbWlpyS1F0LNjbt0Ow051jipA6z5ckkK": "jumlah_pesanan_terlambat_per_state.csv",
-    "144uxyKd_TkjVSIwi2PccAsOvMY0qR0UA": "customer_kategori_sorted.csv",
-    "1JfFEIflZuLk8YpVYtSZWIQSiaqTfJvtO": "rata_rata_waktu_pengiriman_per_state.csv"
+    "1flbfOdBx26n-_fWeKINthyMTOqklGhAq": "grouped_product_category_review_score.csv",
+    "1M5NnrGe7IoQsdqoSgMO7yiWmb8XBB2BP": "jumlah_pesanan_terlambat_per_state_df.csv",
+    "1X8vO_kSKZQ6hxC42opmS_5bPOFhgxxmy": "grouped_customer_data.csv",
+    "1wFkNsEgELsWItZZyeTvv1r3J3fvvVp78": "rata_rata_waktu_pengiriman_per_state_df.csv"
 }
 
 # Mengunduh file dengan nama yang sesuai
