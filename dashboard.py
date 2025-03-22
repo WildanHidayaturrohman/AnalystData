@@ -1,10 +1,10 @@
 # Membaca file CSV ke dalam dataframe
 rfm_df = pd.read_csv("rfm_df.csv")
 merged_4_df = pd.read_csv("merged_4_df.csv")
-kategori_produk_terurut_english = pd.read_csv("kategori_produk_terurut_english.csv")
-jumlah_pesanan_terlambat_per_state = pd.read_csv("jumlah_pesanan_terlambat_per_state.csv")
-customer_kategori_sorted = pd.read_csv("customer_kategori_sorted.csv")
-rata_rata_waktu_pengiriman_per_state = pd.read_csv("rata_rata_waktu_pengiriman_per_state.csv")
+grouped_product_category_review_score = pd.read_csv("grouped_product_category_review_score.csv")
+jumlah_pesanan_terlambat_per_state_df = pd.read_csv("jumlah_pesanan_terlambat_per_state_df.csv")
+grouped_customer_data = pd.read_csv("grouped_customer_data.csv")
+rata_rata_waktu_pengiriman_per_state_df = pd.read_csv("rata_rata_waktu_pengiriman_per_state_df.csv")
 
 import pandas as pd
 import numpy as np
@@ -19,59 +19,78 @@ sns.set(style='dark')
 st.title("E-commerce Dashboard")
 
 # Sidebar untuk filter
-st.sidebar.header("Filters")
+st.sidebar.title("Filters")
 
-# Filter untuk pertanyaan 1 dan 2
-date_range = st.sidebar.date_input(
-    "Select Date Range (Sebelum 2018-10-17 17:30:18):",
-    [pd.to_datetime("2017-10-17"), pd.to_datetime("2018-10-17")]
-)
+# Filter untuk pertanyaan 1 and 2 (date)
+date_filter_1_2 = st.sidebar.date_input("Pilih Tanggal (untuk Pertanyaan 1 dan 2)", value=pd.to_datetime('2018-10-17'))
+# Note: You'll need to adjust the filtering logic in your original code based on the 'order_purchase_timestamp' column
 
-# Filter untuk pertanyaan 3
-top_bottom_filter = st.sidebar.radio("Pertanyaan 3 Filter:", ["Top 10", "Bottom 10"])
+# Filter untuk pertanyaan 3 (top/bottom rating)
+rating_filter_type = st.sidebar.radio("Pilih Filter Rating (untuk Pertanyaan 3)", ("Top 10", "Bottom 10"))
 
+# Judul visdat
+st.title("Visualisasi Data")
 
-# pertanyaan 1
-st.header("Customer Segmentation")
+# Pertanyaan 1
+st.header("Pertanyaan 1: Kategori Pelanggan dalam Setahun Terakhir")
 
-# Visualisasi kategori pelanggan
-plt.figure(figsize=(8, 6))
-
-sns.countplot(x="Kategori Pelanggan", data=customer_kategori_sorted)
+fig, ax = plt.subplots(figsize=(8, 6))
+sns.barplot(x='Kategori Pelanggan', y='Count', data=grouped_customer_data, ax=ax)  # Replace with your data
 plt.title('Kategori Pelanggan dalam Setahun Terakhir')
 plt.xlabel('Kategori Pelanggan')
 plt.ylabel('Jumlah Pelanggan')
-st.pyplot(plt)
+st.pyplot(fig)
 
-# pertanyaan 2
-st.header("Shipping Time Analysis")
+# Pertanyaan 2
+st.header("Pertanyaan 2: Rata-rata Waktu Pengiriman dan Jumlah Pesanan Terlambat")
+# Display 'rata_rata_waktu_pengiriman_per_state_df'
+st.subheader("Rata-rata Waktu Pengiriman per State")
+st.dataframe(rata_rata_waktu_pengiriman_per_state_df)
 
-plt.figure(figsize=(12, 6))
-sns.barplot(
-    x="geolocation_state",
-    y="waktu_pengiriman",
-    data=rata_rata_waktu_pengiriman_per_state
-)
+# Display 'jumlah_pesanan_terlambat_per_state_df'
+st.subheader("Jumlah Pesanan Terlambat per State")
+st.dataframe(jumlah_pesanan_terlambat_per_state_df)
+
+# Visualisasi Rata-rata Waktu Pengiriman per State
+fig, ax = plt.subplots(figsize=(12, 6))
+sns.barplot(x='geolocation_state', y='rata_rata_waktu_pengiriman', data=rata_rata_waktu_pengiriman_per_state_df, ax=ax)
 plt.title('Rata-rata Waktu Pengiriman per State')
 plt.xlabel('State')
 plt.ylabel('Rata-rata Waktu Pengiriman (hari)')
 plt.xticks(rotation=90)
-st.pyplot(plt)
+st.pyplot(fig)
 
-# pertanyaan 3
-st.header("Product Category Performance")
-if top_bottom_filter == "Top 10":
-    data_to_plot = kategori_produk_terurut_english.head(10)
-else:
-    data_to_plot = kategori_produk_terurut_english.tail(10)
-
-plt.figure(figsize=(12, 6))
-sns.barplot(x=data_to_plot.index, y=data_to_plot.values)
-plt.title(f"Kategori Produk dengan Rating Ulasan {top_bottom_filter}")
-plt.xlabel('Kategori Produk')
-plt.ylabel('Rata-rata Rating Ulasan')
+# Visualisasi Jumlah Pesanan Terlambat per State
+fig, ax = plt.subplots(figsize=(12, 6))
+sns.barplot(x='geolocation_state', y='jumlah_pesanan_terlambat', data=jumlah_pesanan_terlambat_per_state_df, ax=ax)
+plt.title('Jumlah Pesanan Terlambat per State')
+plt.xlabel('State')
+plt.ylabel('Jumlah Pesanan Terlambat')
 plt.xticks(rotation=90)
-st.pyplot(plt)
+st.pyplot(fig)
+
+
+# Pertanyaan 3
+st.header("Pertanyaan 3: Rating Ulasan Produk")
+
+if rating_filter_type == "Top 10":
+    top_10_categories = grouped_product_category_review_score.groupby('product_category_name_english')['review_score'].mean().sort_values(ascending=False).head(10)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.barplot(x=top_10_categories.index, y=top_10_categories.values, ax=ax)
+    plt.title('Kategori Produk dengan Rating Ulasan Tertinggi (Top 10)')
+    plt.xlabel('Kategori Produk')
+    plt.ylabel('Rata-rata Rating Ulasan')
+    plt.xticks(rotation=90)
+    st.pyplot(fig)
+else:
+    bottom_10_categories = grouped_product_category_review_score.groupby('product_category_name_english')['review_score'].mean().sort_values(ascending=True).head(10)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.barplot(x=bottom_10_categories.index, y=bottom_10_categories.values, ax=ax)
+    plt.title('Kategori Produk dengan Rating Ulasan Terendah (Bottom 10)')
+    plt.xlabel('Kategori Produk')
+    plt.ylabel('Rata-rata Rating Ulasan')
+    plt.xticks(rotation=90)
+    st.pyplot(fig)
 
 # pertanyaan 4
 st.header("Relationship between Shipping Time and Customer Satisfaction")
